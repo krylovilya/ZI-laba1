@@ -57,7 +57,7 @@ class MainApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         x = abc.index(c) # находим порядковый номер символа в строке
         i = x // 5
         j = x - 5 * i
-        return [i, j, x]    # возвращаем массив из координат и порядкового номера
+        return [i, j]    # возвращаем массив из координат и порядкового номера
 
     # функция, которая вызывается при нажатии на кнопку
     def buttonClicked(self):
@@ -90,6 +90,10 @@ class MainApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         result = []
         # циклом for проходимся по всем символам в тексте, "c" - символ, от англ. слова char
         for c in text:
+            if c == " ":                            # Если наш символ - пробел
+                self.result.append("\n")            # В наше поле с результатом делаем отступ (новую строку)
+                result.append(" ")                  # Добавляем пробел в список с результатом
+                continue                            # переходим ко следующей итерации (к следующему символу)
             # находим координаты символа, el - массив
             # el[0] - i
             # el[1] - j
