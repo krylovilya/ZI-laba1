@@ -1,7 +1,8 @@
-import sys
-from PyQt5 import QtWidgets
+import sys, os
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QTableWidgetItem
 import design  # Это наш конвертированный файл дизайна
+from PyQt5 import QtMultimedia
 
 
 # Главный класс приложения (наследуемся от design)
@@ -19,8 +20,7 @@ class MainApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         # abc - алфавит
         self.abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p',
                     'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-        # заполняем таблицу нашим алфавитом
-        self.update_table(self.abc)
+        self.update_table(self.abc)  # заполняем таблицу нашим алфавитом
 
     # функция заполняет таблицу контентом
     def update_table(self, content):
@@ -54,10 +54,10 @@ class MainApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
     def find_char(self, abc, c):
         # x = 5*i + j - формула нахождения номера символа в строке, зная его координаты
         # j = x - 5*i - как найти j, зная i и x
-        x = abc.index(c) # находим порядковый номер символа в строке
+        x = abc.index(c)  # находим порядковый номер символа в строке
         i = x // 5
         j = x - 5 * i
-        return [i, j]    # возвращаем массив из координат и порядкового номера
+        return [i, j]  # возвращаем массив из координат и порядкового номера
 
     # функция, которая вызывается при нажатии на кнопку
     def buttonClicked(self):
@@ -93,6 +93,7 @@ class MainApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
             if c == " ":                            # Если наш символ - пробел
                 self.result.append("\n")            # В наше поле с результатом делаем отступ (новую строку)
                 result.append(" ")                  # Добавляем пробел в список с результатом
+                pause = [i for i in range(100000000)]
                 continue                            # переходим ко следующей итерации (к следующему символу)
             # находим координаты символа, el - массив
             # el[0] - i
@@ -109,6 +110,19 @@ class MainApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
             result.append(new_c)
             # добавляем в текстовое поле с результатом такую вещь: [c] -> [new_c]
             self.result.append("[{}] -> [{}]".format(c, new_c))
+            # Если галочка в чекбоксе music поставлена, то
+            if self.music.isChecked():
+                # цикл. пикаем столько, сколько строк
+                for i in range(self.find_char(new_abc, new_c)[0] + 1):
+                    # --no-show-progress
+                    os.system("play drip.mp3")
+                    pause = [i for i in range(20000000)]
+                pause = [i for i in range(20000000)]
+                # цикл. пикаем столько, сколько столбцов
+                for i in range(self.find_char(new_abc, new_c)[1] + 1):
+                    os.system("play drip.mp3")
+                    pause = [i for i in range(10000000)]
+                pause = [i for i in range(50000000)]
         # добавляем в текстовое поле наш результат
         self.result.append("".join(result))
 

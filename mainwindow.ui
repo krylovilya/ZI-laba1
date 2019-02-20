@@ -45,6 +45,13 @@
       <widget class="QLineEdit" name="lineEdit_2"/>
      </item>
      <item>
+      <widget class="QCheckBox" name="music">
+       <property name="text">
+        <string>Нужен звук?</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButton">
        <property name="text">
         <string>PushButton</string>
